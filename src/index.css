@@ -6,6 +6,10 @@
     sans-serif;
 }
 
+body {
+  padding: 20px;
+}
+
 .chart {
   display: inline-block;
   background-color: lightgrey;
@@ -20,6 +24,10 @@
 #chart-ui {
   display: flex;
   padding: 5px;
+}
+
+.bar-right {
+  background-color: pink;
 }
 
 .ui {

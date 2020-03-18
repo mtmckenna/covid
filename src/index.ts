@@ -58,9 +58,9 @@ data$.subscribe(text => {
   populateRightAreaSelect();
 
   const italyIndex = countriesAndRegions.indexOf("Italy");
-  const usIndex = countriesAndRegions.indexOf("US");
+  const caIndex = provincesAndStates.indexOf("California");
   leftAreaSelect.selectedIndex = italyIndex;
-  rightAreaSelect.selectedIndex = usIndex;
+  rightAreaSelect.selectedIndex = caIndex;
 
   render();
 });
@@ -110,8 +110,8 @@ function render() {
   const numDays = csv[0].length - firstDayIndex;
   const emptyDays = Array(numDays).fill(0);
   const dates = csv[0].slice(4);
-  let left: Array<[number, string]> = [];
-  let right: Array<[number, string]> = [];
+  let left: Array<[number, string, boolean | null]> = [];
+  let right: Array<[number, string, boolean | null]> = [];
 
   let leftArea = leftAreaSelect.value;
   let rightArea = rightAreaSelect.value;
@@ -141,16 +141,12 @@ function render() {
   left.splice(0, leftDaysBeforeDeath);
   right.splice(0, rightDaysBeforeDeath);
 
-  let mostRecentDate = right[right.length - 1][1];
-  for (let i = right.length; i < left.length; i++) {
-    const date = new Date(mostRecentDate);
-    date.setDate(date.getDate() + 1);
-    const year = getTwoDigitYear(date);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const formattedDate = `${month}/${day}/${year}`;
-    right[i] = [-1, formattedDate];
-  }
+  // Build up future dates for the area on the right
+  buildUpFutureDates(left, right);
+
+  // Find doubling dates for the left side
+  markDoublingDays(left);
+  markDoublingDays(right);
 
   // Recreate wrapper
   const chartWrapper = d3.select("#chart-wrapper");
@@ -171,7 +167,8 @@ function render() {
     .enter()
     .append("div")
     .attr("class", "bar-left bar")
-    .style("background", d => barBackground(scale(d[0]), "#7fa2e3", true))
+    .style("background", d => barBackground(scale(Math.max(d[0], 0)), "#7fa2e3", true))
+    .style("color", d => (d[2] ? "#ff0000" : "#000000"))
     .append(d => createBarText(d, true));
 
   // Create right right + bind data + add bars
@@ -181,8 +178,35 @@ function render() {
     .enter()
     .append("div")
     .attr("class", "bar-right bar")
-    .style("background", d => barBackground(scale(d[0]), "#c4b96e", false))
+    .style("background", d => barBackground(scale(Math.max(d[0], 0)), "#c4b96e", false))
+    .style("color", d => (d[2] ? "#ff0000" : "#000000"))
     .append(d => createBarText(d, false));
+}
+
+function buildUpFutureDates(left: [[number, string, boolean]], right: [[number, string, boolean]]) {
+  let mostRecentDate = right[right.length - 1][1];
+  for (let i = right.length; i < left.length; i++) {
+    const date = new Date(mostRecentDate);
+    date.setDate(date.getDate() + 1);
+    const year = getTwoDigitYear(date);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const formattedDate = `${month}/${day}/${year}`;
+    right[i] = [-1, formattedDate, false];
+  }
+}
+
+function markDoublingDays(data: [[number, string, boolean]]) {
+  data[0][2] = false;
+  let start = data[1][0];
+  for (let i = 0; i < data.length; i++) {
+    data[i][2] = false;
+    const curr = data[i][0];
+    if (curr >= start * 2 && curr) {
+      data[i][2] = true;
+      start = curr;
+    }
+  }
 }
 
 function createBarText(data: [number, string], isLeft = true) {
