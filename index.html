@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" type="text/css" href="./src/index.css" />
+
+    <div id="chart-ui">
+      <div class="ui">
+        <fieldset>
+          <legend>Select base area type:</legend>
+          <div>
+            <input
+              type="radio"
+              id="left-country-region"
+              name="left-area-type-radios"
+              value="country-region"
+              checked
+            />
+            <label for="country-region">Country/Region </label>
+            <input
+              type="radio"
+              id="left-province-state"
+              name="left-area-type-radios"
+              value="province-state"
+            />
+            <label for="province-state">Province/State</label>
+          </div>
+        </fieldset>
+        <select name="area" id="left-area-select">
+          <option value="">Loading...</option>
+        </select>
+      </div>
+      <div class="ui">
+        <fieldset>
+          <legend>Select compared area type:</legend>
+          <div>
+            <input
+              type="radio"
+              id="right-country-region"
+              name="right-area-type-radios"
+              value="country-region"
+              checked
+            />
+            <label for="country-region">Country/Region </label>
+            <input
+              type="radio"
+              id="right-province-state"
+              name="right-area-type-radios"
+              value="province-state"
+            />
+            <label for="province-state">Province/State</label>
+          </div>
+        </fieldset>
+        <select name="area" id="right-area-select">
+          <option value="">Loading...</option>
+        </select>
+      </div>
+    </div>
+    <div id="chart-wrapper"></div>
+    <script src="./src/index.ts"></script>
+  </body>
+</html>

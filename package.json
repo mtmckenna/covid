@@ -1,0 +1,26 @@
+{
+  "name": "covid",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Matt McKenna <matt@mtmckenna.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html --no-hmr",
+    "build": "parcel build index.html"
+  },
+  "devDependencies": {
+    "@types/d3": "^5.7.2",
+    "@types/papaparse": "^5.0.3",
+    "parcel": "^1.12.4",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "d3": "^5.15.0",
+    "papaparse": "^5.1.1",
+    "rxjs": "^6.5.4"
+  },
+  "prettier": {
+    "printWidth": 100
+  }
+}

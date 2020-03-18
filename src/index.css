@@ -1,0 +1,48 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma,
+    sans-serif;
+}
+
+.chart {
+  display: inline-block;
+  background-color: lightgrey;
+  padding: 5px;
+  width: 100%;
+}
+
+#chart-wrapper {
+  display: flex;
+}
+
+#chart-ui {
+  display: flex;
+  padding: 5px;
+}
+
+.ui {
+  width: 100%;
+  padding: 5px;
+}
+
+.bar {
+  width: 100%;
+  display: flex;
+}
+
+.bar-text {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+select {
+  display: inline-block;
+  width: 100%;
+}
+
+fieldset {
+  border: none;
+}
