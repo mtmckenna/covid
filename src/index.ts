@@ -43,14 +43,14 @@ data$.subscribe(text => {
   provincesAndStates = csv
     .map(row => row[0])
     .slice(1)
-    .filter((name: string) => name.length);
+    .filter((name: string | undefined) => name && name.length);
 
   provincesAndStates = Array.from(new Set(provincesAndStates));
 
   countriesAndRegions = csv
     .map(row => row[1])
     .slice(1)
-    .filter((name: string) => name.length);
+    .filter((name: string | undefined) => name && name.length);
 
   countriesAndRegions = Array.from(new Set(countriesAndRegions)).sort();
 
