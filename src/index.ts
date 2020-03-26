@@ -21,7 +21,7 @@ let rightAreaColumn = 0;
 
 const firstDayIndex = 4;
 const url =
-  "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
+  "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
 
 const data$ = fromFetch(url).pipe(
   switchMap(r => (r.ok ? r.text() : of({ error: true, message: `Error ${r.status}` }))),
@@ -58,9 +58,9 @@ data$.subscribe(text => {
   populateRightAreaSelect();
 
   const italyIndex = countriesAndRegions.indexOf("Italy");
-  const caIndex = provincesAndStates.indexOf("California");
+  const usIndex = countriesAndRegions.indexOf("US");
   leftAreaSelect.selectedIndex = italyIndex;
-  rightAreaSelect.selectedIndex = caIndex;
+  rightAreaSelect.selectedIndex = usIndex;
 
   render();
 });
